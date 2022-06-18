@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from .models import Profile, Post, Neighborhood, Business
 from django.contrib.auth.models import User
@@ -14,7 +15,7 @@ def loginUser(request):
       password = request.POST['password']
       user = authenticate(username=username, password=password)
 
-      if User.objects.filter(username=username).exists():
+      if not User.objects.filter(username=username).exists():
           messages.error(request, 'Username Does Not Exist! Choose Another One.')
           return redirect('login')
 
@@ -35,11 +36,12 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def index(request):
-  hood = Neighborhood.get_hoods()
-  return render (request, 'index.html')
+  hood = Neighborhood.objects.all()
+  return render (request, 'index.html', {'hood': hood})
 
 def signup(request):
   if request.method == 'POST':
+    context= {'has_error': False}
     username = request.POST['username']
     email = request.POST['email']
     first_name = request.POST['first_name']
@@ -54,7 +56,12 @@ def signup(request):
     if User.objects.filter(username=username).exists():
       messages.error(request,'Username Is Taken. Try Again.')
       return redirect('signup')
+
+    if User.objects.filter(email=email).exists():
+      messages.error(request, 'Email Address already taken. Try Again')
+      return redirect('signup')
+
     user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email)
-    user.set_password = password1
+    user.set_password(password1)
     user.save()
   return render(request,'signup.html')
