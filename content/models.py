@@ -94,6 +94,10 @@ class Neighborhood(models.Model):
     def __str__(self):
       return str(self.name)
 
+    def get_hoods(self):
+      all_hoods = Neighborhood.objects.all()
+      return all_hoods
+
     def save_hood(self):
       self.save()
 
