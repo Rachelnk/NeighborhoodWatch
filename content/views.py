@@ -65,3 +65,7 @@ def signup(request):
     user.set_password(password1)
     user.save()
   return render(request,'signup.html')
+
+@login_required(login_url='login')
+def create_user(request):
+  return render(request)
