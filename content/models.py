@@ -82,8 +82,27 @@ class neighborhood(models.Model):
     description = models.TextField(max_length=254, blank=True, verbose_name='Description')
     location = models.CharField(max_length=150, verbose_name='Location', null=True, blank=True)
     county = models.CharField(choices=counties, max_length=150, verbose_name='County', null=True, blank=True)
-    photo = CloudinaryField('image')
+    logo = CloudinaryField('logo')
     admin =  models.ForeignKey('User', on_delete=models.CASCADE, verbose_name= 'Admin', null=True, blank=True)
+    health_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Health Department')
+    police_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Police Department')
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created')
+    date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated')
+
+
+    def __str__(self):
+      return str(self.name)
+
+    def save_hood(self):
+      self.save()
+
+    def delete_hood(self):
+      self.delete()
+
+    @classmethod
+    def find_hood(cls, neighborhood_id):
+      return cls.objects.filter(id=neighborhood_id)
+
 
 
 
