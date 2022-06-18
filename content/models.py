@@ -167,6 +167,16 @@ class Post(models.Model):
     class Meta:
       ordering = ['date_created']
 
+class Membership(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='User')
+    neighbourhood_membership = models.ForeignKey(Neighborhood, related_name='neighbourhood_member', on_delete=models.CASCADE, verbose_name='NeighbourHood')
+
+    def __str__(self):
+        return str(self.user.username + '-' + self.neighbourhood_membership.title)
+    
+    class Meta:
+        verbose_name_plural = 'Memberships'
+
 class Business(models.Model):
     title = models.TextField(max_length= 20, verbose_name='Business Title', null= True)
     description = models.CharField(max_length=150, null = True, verbose_name= 'Business Descritption')
