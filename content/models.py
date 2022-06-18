@@ -1,3 +1,4 @@
+from operator import truediv
 from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import User
@@ -113,10 +114,6 @@ class Neighborhood(models.Model):
     class Meta:
       verbose_name_plural = 'Neighborhoods'
 
-
-
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='User', null=True)
     profile_pic = CloudinaryField('image')
@@ -137,6 +134,8 @@ class Post(models.Model):
     caption = models.CharField(max_length=2200, verbose_name='Caption', null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Author', null = True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Profile', null =True)
+    neighborhood =  models.ForeignKey(Neighborhood, on_delete=models.CASCADE, verbose_name='Hood', null= True)
+    category = models.CharField(choices=post_type, max_length=150, null=True, verbose_name='Post Category')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created', null= True)
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated', null= True)
 
@@ -149,8 +148,8 @@ class Post(models.Model):
     def delete_post(self):
       self.delete()
 
-    def update_post(self, id, title, caption):
-      updatePost = Post.objects.filter(id=id).update(title = title, caption = caption)
+    def update_post(self, id, title, caption, neighborhood):
+      updatePost = Post.objects.filter(id=id).update(title = title, caption = caption, neighborhood = neighborhood)
       return updatePost
 
     @classmethod
@@ -163,4 +162,47 @@ class Post(models.Model):
 
     class Meta:
       ordering = ['date_created']
+
+class Business(models.Model):
+    title = models.TextField(max_length= 20, verbose_name='Business Title', null= True)
+    description = models.CharField(max_length=150, null = True, verbose_name= 'Business Descritption')
+    logo = CloudinaryField('Business Logo/Image')
+    email = models.EmailField(verbose_name='Business Email', null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Business owner' )
+    business_type = models.CharField(max_length=50, choices=business_type, verbose_name='Business Type', null=True)
+    neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, null=True, verbose_name='Hood')
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created')
+    date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated')
+
+    def __str__(self):
+      return f'{self.title} Business'
+
+    def save_business(self):
+       self.save()
+
+    def delete_business(self):
+      self.delete()
+    def get_businesses(self):
+      businesses = Business.objects.all()
+      return businesses
+
+    def find_business(self,business_id):
+        business = Business.objects.filter(self = business_id)
+        return business
+
+    def update_busness(self, id, title, description, logo, business_type, neighborhood):
+      updateBusiness = Business.objects.filter(id = id).update(title = title, description = description, logo = logo, business_type = business_type, neighborhood = neighborhood)
+      return updateBusiness
+
+    class Meta:
+      verbose_name_plural = 'Businesses'
+
+
+
+      
+
+
+
+
+
 
