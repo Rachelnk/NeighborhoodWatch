@@ -83,7 +83,7 @@ class Neighborhood(models.Model):
     location = models.CharField(max_length=150, verbose_name='Location', null=True, blank=True)
     county = models.CharField(choices=counties, max_length=150, verbose_name='County', null=True, blank=True)
     logo = CloudinaryField('logo')
-    admin =  models.ForeignKey('User', on_delete=models.CASCADE, verbose_name= 'Admin', null=True, blank=True)
+    admin =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name= 'Admin', null=True, blank=True)
     health_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Health Department')
     police_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Police Department')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created')
@@ -110,16 +110,19 @@ class Neighborhood(models.Model):
                     logo = logo)
 
         return updateHood
+    class Meta:
+      verbose_name_plural = 'Neighborhoods'
 
 
 
 
 
 class Profile(models.Model):
-    author = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='User', null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='User', null=True)
     profile_pic = CloudinaryField('image')
     bio = models.TextField()
     email = models.EmailField(max_length=100, blank=True)
+    neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, null=True ,verbose_name= 'Hood')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created', null= True)
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated', null= True)
 
