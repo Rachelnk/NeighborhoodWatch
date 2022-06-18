@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from .forms import AddBusinessForm, AddNeighborhoodForm, AddPostForm, UpdateProfileForm, UpdateUserForm
 
 # Create your views here.
 
@@ -67,5 +68,34 @@ def signup(request):
   return render(request,'signup.html')
 
 @login_required(login_url='login')
-def create_user(request):
+def addneighborhood(request):
+  form = AddNeighborhoodForm()
+  if request.method == 'POST':
+    form = AddNeighborhoodForm(request.POST, request.FILES)
+    if form.is_valid():
+      hood = form.save(commit=False)
+      hood.user = request.user
+      hood.profile = request.user.profile
+      hood.save()
+      messages.success(request, "Neighborhood Added Successfully")
+      return redirect('index')
+    else:
+      messages.error(request, "Neighborhood wasn't created.")
+      return redirect ('addneighborhood')
+
+  else:
+    form = AddNeighborhoodForm()
+
+  return render(request, addneighborhood.html, {'form': form})
+
+@login_required(login_url='login')
+def create_hood(request):
   return render(request)
+
+@login_required(login_url='login')
+def create_hood(request):
+  return render(request)
+
+
+
+
