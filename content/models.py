@@ -126,6 +126,12 @@ class Profile(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created', null= True)
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated', null= True)
 
+    def __str__(self):
+      return str(self.user.username)
+
+    class Meta:
+         verbose_name_plural = 'Profles'
+
 class Post(models.Model):
     title = models.CharField(max_length=500, verbose_name='Title', null=True)
     caption = models.CharField(max_length=2200, verbose_name='Caption', null=True)
@@ -143,13 +149,18 @@ class Post(models.Model):
     def delete_post(self):
       self.delete()
 
+    def update_post(self, id, title, caption):
+      updatePost = Post.objects.filter(id=id).update(title = title, caption = caption)
+      return updatePost
+
     @classmethod
     def all_posts(cls):
       return cls.objects.all()
     
     @classmethod
-    def searcg_posts(cls, title):
+    def search_posts(cls, title):
       return cls.objects.filter(title__icontains=title).all()
+
     class Meta:
-      verbose_name_plural = 'Posts'
+      ordering = ['date_created']
 
