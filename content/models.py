@@ -136,7 +136,7 @@ class Profile(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=500, verbose_name='Title', null=True)
     caption = models.CharField(max_length=2200, verbose_name='Caption', null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Author', null = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', null = True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Profile', null =True)
     neighborhood =  models.ForeignKey(Neighborhood, on_delete=models.CASCADE, verbose_name='Hood', null= True)
     category = models.CharField(choices=post_type, max_length=150, null=True, verbose_name='Post Category')

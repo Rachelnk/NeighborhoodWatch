@@ -1,6 +1,7 @@
 from django  import forms
-from models import Neighborhood, Business, Profile
+from models import Neighborhood, Business, Profile, Post
 from django.contrib.auth.models import User
+from cloudinary.forms import CloudinaryFileField
 
 counties = [
     ('', ('Choose')), 
@@ -83,3 +84,28 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'email']
+
+class UpdateProfileForm(forms.ModelForm):
+    class meta:
+      model = 'Profile'
+      exclude = ('user', 'neighborhood')
+
+class Neighborhood(forms.ModelForm):
+    class Meta:
+      model = Neighborhood
+      exclude = ('admin')
+
+class BusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        exclude = ('user', 'neighborhood')
+
+
+class PostForm(forms.ModelForm):
+  title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Title'}))
+  description = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Description'}))
+  category = forms.ChoiceField(choices=post_type, required=True, widget=forms.Select(attrs={'class': 'form-control mb-4', 'placeholder':'Select Post Type'}))
+  
+  class Meta:
+       model = Post
+       exclude = ('user', 'neighborhood')
