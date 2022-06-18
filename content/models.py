@@ -121,8 +121,7 @@ class Neighborhood(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='User', null=True)
     profile_pic = CloudinaryField('image')
-    bio = models.TextField()
-    email = models.EmailField(max_length=100, blank=True)
+    bio = models.TextField(max_length = 150, null = True, verbose_name= 'Bio')
     neighborhood = models.ForeignKey(Neighborhood, on_delete=models.CASCADE, null=True ,verbose_name= 'Hood')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created', null= True)
     date_updated = models.DateTimeField(auto_now=True, verbose_name='Date Updated', null= True)

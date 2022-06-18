@@ -1,3 +1,4 @@
+import email
 from django  import forms
 from models import Neighborhood, Business, Profile, Post
 from django.contrib.auth.models import User
@@ -86,22 +87,37 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'username', 'email']
 
 class UpdateProfileForm(forms.ModelForm):
+    portfolio_pic = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file','data-height':300, 'data-max-file-size':"1M"}))
+    bio = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Bio'}))
+    
+
     class meta:
       model = 'Profile'
       exclude = ('user', 'neighborhood')
 
-class Neighborhood(forms.ModelForm):
+class AddNeighborhoodForm(forms.ModelForm):
+    title = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Title','class': 'form-control mb-4'}))
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': 'Description','class': 'form-control mb-4','rows': 3,}))
+    location = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Location','class': 'form-control mb-4'}))
+    county = forms.ChoiceField(required=True, widget=forms.Select( attrs={'class': 'form-control mb-4'}), choices=counties)
+    health_department = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Health Department','class': 'form-control mb-4'}))
+    police_department = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Police Department','class': 'form-control mb-4'}))
+    photo = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file',}))
     class Meta:
       model = Neighborhood
       exclude = ('admin')
 
-class BusinessForm(forms.ModelForm):
+class AddBusinessForm(forms.ModelForm):
+    title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Title'}))
+    description = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Description'}))
+    category = forms.ChoiceField(choices=business_type, required=True, widget=forms.Select(attrs={'class': 'form-control mb-4', 'placeholder':'Select Business Type'}))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Email'}))
     class Meta:
         model = Business
         exclude = ('user', 'neighborhood')
 
 
-class PostForm(forms.ModelForm):
+class AddPostForm(forms.ModelForm):
   title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Title'}))
   description = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Description'}))
   category = forms.ChoiceField(choices=post_type, required=True, widget=forms.Select(attrs={'class': 'form-control mb-4', 'placeholder':'Select Post Type'}))
