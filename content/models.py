@@ -77,7 +77,7 @@ post_type = [
 
 # Create your models here.
 
-class neighborhood(models.Model):
+class Neighborhood(models.Model):
     name = models.TextField(max_length=20, verbose_name='Hood Title', null=True)
     description = models.TextField(max_length=254, blank=True, verbose_name='Description')
     location = models.CharField(max_length=150, verbose_name='Location', null=True, blank=True)
@@ -102,6 +102,15 @@ class neighborhood(models.Model):
     @classmethod
     def find_hood(cls, neighborhood_id):
       return cls.objects.filter(id=neighborhood_id)
+
+    def update_hood(self, id, name, location, county, logo):
+        updateHood = Neighborhood.objects.filter(id=id).update(name = name,
+                    location = location,
+                    county = county,
+                    logo = logo)
+
+        return updateHood
+
 
 
 
