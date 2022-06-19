@@ -233,6 +233,15 @@ def leave_neighborhood(request, title):
             messages.success(request, "You Have Left This Neighborhood!")
             return redirect('single_neighborhood', title = title)
 
+def search_business(request):
+  if request.method == 'POST':
+    search = request.POST['business_search']
+    print(search)
+    businesses = Business.objects.filter(title__icontains = search).all()
+    return render(request, 'search_results.html', {'search': search, 'businesses':businesses})
+  else:
+    return render(request,'search_results.html')
+
 
 
 
