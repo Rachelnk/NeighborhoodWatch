@@ -67,6 +67,28 @@ def signup(request):
     user.save()
   return render(request,'signup.html')
 
+    
+@login_required(login_url='login')
+def editprofile(request, username):
+    user = User.objects.get(username=username)
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your Profile Has Been Updated Successfully!')
+            return redirect('myprofile', username=username)
+        else:
+            messages.error(request, "Your Profile Wasn't Updated!")
+            return redirect('editprofile', username=username)
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+
+    return render(request, 'editprofile.html', {'user_form': user_form, 'profile_form': profile_form})
+
 @login_required(login_url='login')
 def add_neighborhood(request, username):
   profile = User.objects.get(username=username)
