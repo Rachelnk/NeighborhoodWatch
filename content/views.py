@@ -200,6 +200,37 @@ def my_posts(request, username):
   posts = Post.object.filter(user = profile.id).all()
   return render(request, 'my_posts.html', {'posts':posts,'profile_details':profile_details})
 
+
+@login_required(login_url='login')
+def editpost(request, username, id):
+    post = Post.objects.get(id=id)
+    print(post)
+    if request.method == 'POST':
+        form = AddPostForm(request.POST, request.FILES, instance=portfolio)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your Post Has Been Updated Successfully!')
+            return redirect('my_posts', username=username)
+        else:
+            messages.error(request, "Your Post Wasn't Updated!")
+            return redirect('editpost', username=username)
+    else:
+        form = AddPostForm(instance=post)
+
+    return render(request, 'editpost.html', {'form': form})
+
+@login_required(login_url='login')
+def deletepost(request, username, title):
+    post = Post.objects.get(title=title)
+    if post:
+        post.delete()
+        messages.success(request, 'Your Post Has Been Deleted Successfully!')
+        return redirect('my_posts', username=username)
+    else:
+        messages.error(request, "Your Post Wasn't Deleted!")
+        return redirect('my_posts', username=username)  
+
 @login_required(login_url='login')
 def single_neighborhood(request, name):
   current_profile = request.user.profile
