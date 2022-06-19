@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from content.models import Membership, Profile, Post, Neighborhood, Business
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -152,7 +152,7 @@ def add_post(request, username):
       neighborhood=form.cleaned_data['neighborhood']
       
       hood = Neighborhood.objects.get(pk=int(neighborhood))
-      member = Membership.objects.filter(user = profile.id, neighbourhood_membership = hood)
+      member = Membership.objects.filter(user = profile.id, neighborhood_membership = hood)
       if not member:
         messages.success(request,'You have to be a member of this neighborhood to add a post.')
         return redirect('add_post', username = username)
@@ -177,6 +177,23 @@ def my_posts(request, username):
   profile_details = Profile.objects.get(user = profile.id)
   posts = Post.object.filter(user = profile.id).all()
   return render(request, 'my_posts.html', {'posts':posts,'profile_details':profile_details})
+
+@login_required(login_url='login')
+def single_neighborhood(request, name):
+  current_profile = request.user.profile
+  neighborhood = get_object_or_404(Neighborhood, title=name)
+  businesses = Business.objects.filter(neighborhood = neighborhood.id).all()
+  posts = Post.objects.filter(neighborhood = neighborhood.id).all()
+  members = Membership.objects.filter(neighborhood_membership = neighborhood.id).all()
+  member = Membership.objects.filter(user = current_profile.id, neighborhood_membership = neighborhood.id )
+  is_member = False
+  if member:
+    is_member = True
+  else:
+    is_member = False
+    params = {'neighborhood':neighborhood,'businesses':businesses,'posts':posts,'members':members, 'is_member':is_member}
+
+  return render(request, neighborhood.html, )
 
 
 
