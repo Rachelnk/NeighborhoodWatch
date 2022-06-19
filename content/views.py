@@ -206,7 +206,7 @@ def editpost(request, username, id):
     post = Post.objects.get(id=id)
     print(post)
     if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES, instance=portfolio)
+        form = AddPostForm(request.POST, request.FILES, instance=post)
 
         if form.is_valid():
             form.save()
@@ -230,6 +230,36 @@ def deletepost(request, username, title):
     else:
         messages.error(request, "Your Post Wasn't Deleted!")
         return redirect('my_posts', username=username)  
+
+@login_required(login_url='login')
+def editbusiness(request, username, id):
+    business = Business.objects.get(id=id)
+    print(business)
+    if request.method == 'POST':
+        form = AddBusinessForm(request.POST, request.FILES, instance=business)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your Business Details Have Been Updated Successfully!')
+            return redirect('my_businesses', username=username)
+        else:
+            messages.error(request, "Your Business Details Weren't Updated!")
+            return redirect('editbsusiness', username=username)
+    else:
+        form = AddBusinessForm(instance=business)
+
+    return render(request, 'editbusiness.html', {'form': form})
+
+@login_required(login_url='login')
+def deletebusiness(request, username, title):
+    business = Business.objects.get(title=title)
+    if business:
+        business.delete()
+        messages.success(request, 'Your Business Has Been Deleted Successfully!')
+        return redirect('my_businesses', username=username)
+    else:
+        messages.error(request, "Your Business Wasn't Deleted!")
+        return redirect('my_businesses', username=username) 
 
 @login_required(login_url='login')
 def single_neighborhood(request, name):
