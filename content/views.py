@@ -1,14 +1,12 @@
 from multiprocessing import context
-import profile
-from urllib.response import addbase
 from django.shortcuts import render, redirect
-from .models import Membership, Profile, Post, Neighborhood, Business
+from content.models import Membership, Profile, Post, Neighborhood, Business
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .forms import AddBusinessForm, AddNeighborhoodForm, AddPostForm, UpdateProfileForm, UpdateUserForm
+from content.forms import AddBusinessForm, AddNeighborhoodForm, AddPostForm, UpdateProfileForm, UpdateUserForm
 
 # Create your views here.
 
@@ -96,7 +94,7 @@ def add_neighborhood(request, username):
 def my_neighborhoods(request, username):
   profile = User.objects.get(username=username)
   profile_details =  Profile.objects.get(user = profile.id)
-  hoods = Neighborhood.objects.filter(admin = profile.id)
+  hoods = Neighborhood.objects.filter(hood_admin = profile.id)
   return render (request, 'my_neighborhoods.html', {'profile_details':profile_details})
 
 @login_required(login_url='login')
@@ -172,6 +170,13 @@ def add_post(request, username):
     form = AddPostForm()
 
   return render(request, 'add_post.html', {'form':form})
+
+@login_required(login_url='login')
+def my_posts(request, username):
+  profile = User.objects.get(username = username)
+  profile_details = Profile.objects.get(user = profile.id)
+  posts = Post.object.filter(user = profile.id).all()
+  return render(request, 'my_posts.html', {'posts':posts,'profile_details':profile_details})
 
 
 

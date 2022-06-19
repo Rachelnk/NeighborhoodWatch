@@ -1,6 +1,5 @@
-import email
 from django  import forms
-from models import Neighborhood, Business, Profile, Post
+from content.models import Neighborhood, Business, Profile, Post
 from django.contrib.auth.models import User
 from cloudinary.forms import CloudinaryFileField
 
@@ -91,8 +90,8 @@ class UpdateProfileForm(forms.ModelForm):
     bio = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Bio'}))
     
 
-    class meta:
-      model = 'Profile'
+    class Meta:
+      model = Profile
       exclude = ('user', 'neighborhood')
 
 class AddNeighborhoodForm(forms.ModelForm):
@@ -105,7 +104,7 @@ class AddNeighborhoodForm(forms.ModelForm):
     photo = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file',}))
     class Meta:
       model = Neighborhood
-      exclude = ('admin')
+      exclude = ('hood_admin',)
 
 class AddBusinessForm(forms.ModelForm):
     title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Title'}))

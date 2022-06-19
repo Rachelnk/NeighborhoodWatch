@@ -1,5 +1,3 @@
-from operator import truediv
-from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
@@ -84,7 +82,7 @@ class Neighborhood(models.Model):
     location = models.CharField(max_length=150, verbose_name='Location', null=True, blank=True)
     county = models.CharField(choices=counties, max_length=150, verbose_name='County', null=True, blank=True)
     logo = CloudinaryField('logo')
-    admin =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name= 'Admin', null=True, blank=True)
+    hood_admin =  models.ForeignKey(User, on_delete=models.CASCADE, verbose_name= 'Admin', null=True, blank=True)
     health_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Health Department')
     police_department = models.CharField(max_length=15, null=True, blank=True, verbose_name='Police Department')
     date_created = models.DateTimeField(auto_now_add=True, verbose_name='Date Created')
