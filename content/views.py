@@ -67,6 +67,12 @@ def signup(request):
     user.save()
   return render(request,'signup.html')
 
+
+@login_required(login_url='login')
+def myprofile(request, username):
+    profile = User.objects.get(username=username)
+    profile_details = Profile.objects.get(user = profile.id)
+    return render(request, 'myprofile.html', {'profile':profile, 'profile_details':profile_details})
     
 @login_required(login_url='login')
 def editprofile(request, username):
@@ -200,7 +206,7 @@ def my_posts(request, username):
   posts = Post.object.filter(user = profile.id).all()
   return render(request, 'my_posts.html', {'posts':posts,'profile_details':profile_details})
 
-
+# delete and edit functions for post
 @login_required(login_url='login')
 def editpost(request, username, id):
     post = Post.objects.get(id=id)
@@ -231,6 +237,7 @@ def deletepost(request, username, title):
         messages.error(request, "Your Post Wasn't Deleted!")
         return redirect('my_posts', username=username)  
 
+# delete and edit functions for business
 @login_required(login_url='login')
 def editbusiness(request, username, id):
     business = Business.objects.get(id=id)
@@ -244,7 +251,7 @@ def editbusiness(request, username, id):
             return redirect('my_businesses', username=username)
         else:
             messages.error(request, "Your Business Details Weren't Updated!")
-            return redirect('editbsusiness', username=username)
+            return redirect('editbusiness', username=username)
     else:
         form = AddBusinessForm(instance=business)
 
@@ -259,7 +266,39 @@ def deletebusiness(request, username, title):
         return redirect('my_businesses', username=username)
     else:
         messages.error(request, "Your Business Wasn't Deleted!")
-        return redirect('my_businesses', username=username) 
+        return redirect('my_businesses', username=username)
+
+# delete and edit functions for neighborhood
+@login_required(login_url='login')
+def editneighborhood(request, username, id):
+    neighborhood = Neighborhood.objects.get(id=id)
+    print(neighborhood)
+    if request.method == 'POST':
+        form = AddNeighborhoodForm(request.POST, request.FILES, instance=neighborhood)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your Neighborhood Details Have Been Updated Successfully!')
+            return redirect('my_neighborhoods', username=username)
+        else:
+            messages.error(request, "Your Neighborhood Details Weren't Updated!")
+            return redirect('editneighborhood', username=username)
+    else:
+        form = AddNeighborhoodForm(instance=neighborhood)
+
+    return render(request, 'editneighborhood.html', {'form': form})
+
+
+@login_required(login_url='login')
+def deleteneighborhood(request, username, title):
+    neighborhood = Business.objects.get(title=title)
+    if neighborhood:
+        neighborhood.delete()
+        messages.success(request, 'Your Neighborhood Has Been Deleted Successfully!')
+        return redirect('my_neighborhoods', username=username)
+    else:
+        messages.error(request, "Your Neighborhood Wasn't Deleted!")
+        return redirect('my_neighborhoods', username=username)  
 
 @login_required(login_url='login')
 def single_neighborhood(request, name):
