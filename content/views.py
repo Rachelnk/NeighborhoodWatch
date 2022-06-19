@@ -118,7 +118,7 @@ def add_business(request, username):
 
       else:
         hood = Neighborhood.objects.get(pk=int(neighborhood))
-        new_business = Business(title = title, email = email, neighbourhood = hood, description = description, owner = request.user.profile )
+        new_business = Business(title = title, email = email, neighborhood = hood, description = description, owner = request.user.profile )
         business = form.save(commit=False)
         new_business.save()
         
@@ -193,7 +193,32 @@ def single_neighborhood(request, name):
     is_member = False
     params = {'neighborhood':neighborhood,'businesses':businesses,'posts':posts,'members':members, 'is_member':is_member}
 
-  return render(request, neighborhood.html, )
+  return render(request, 'neighborhood.html', params )
+
+@login_required(login_url='login')
+def join_neighborhood(request, title):
+  neighborhoodTobejoined = Neighborhood.objects.get(title = title)
+  currentUserProfile = request.user.profile
+
+  if not neighborhoodTobejoined:
+        messages.error(request, "⚠️ neighborhood Does Not Exist!")
+        return redirect('Home')
+  else:
+        member_elsewhere = Membership.objects.filter(user = currentUserProfile)
+        joined = Membership.objects.filter(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
+        if joined:
+            messages.error(request, '⚠️ You Can Only Join A neighborhood Once!')
+            return redirect('single_neighborhood', title = title)
+        elif member_elsewhere:
+            messages.error(request, '⚠️ You Are Already A Member In Another neighborhood! Leave To Join This One')
+            return redirect('single_neighborhood', title = title)
+        else:
+            neighborhoodToadd = Membership(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
+            neighborhoodToadd.save()
+            messages.success(request, "✅ You Are Now A Member Of This neighborhood!")
+            return redirect('single_neighborhood', title = title)
+
+
 
 
 
