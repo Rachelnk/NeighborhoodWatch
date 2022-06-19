@@ -135,7 +135,11 @@ def add_business(request, username):
   return render(request, 'add_business.html', {'form':form})
 
 @login_required(login_url='login')
-def my_businesses(request):
+def my_businesses(request, username):
+  profile = User.objects.get(username = username)
+  profile_details = Profile.objects.get(user = profile.id)
+  businesses = Business.object.filter(owner = profile.id).all()
+  return render(request, 'my_businesses.html', {'businesses':businesses,'profile_details':profile_details})
 
 @login_required(login_url='login')
 def add_post(request, username):
