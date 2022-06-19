@@ -202,22 +202,36 @@ def join_neighborhood(request, title):
 
   if not neighborhoodTobejoined:
         messages.error(request, "⚠️ neighborhood Does Not Exist!")
-        return redirect('Home')
+        return redirect('index')
   else:
         member_elsewhere = Membership.objects.filter(user = currentUserProfile)
         joined = Membership.objects.filter(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
         if joined:
-            messages.error(request, '⚠️ You Can Only Join A neighborhood Once!')
+            messages.error(request, 'ou Can Only Join A neighborhood Once!')
             return redirect('single_neighborhood', title = title)
         elif member_elsewhere:
-            messages.error(request, '⚠️ You Are Already A Member In Another neighborhood! Leave To Join This One')
+            messages.error(request, 'You Are Already A Member In Another neighborhood! Leave To Join This One')
             return redirect('single_neighborhood', title = title)
         else:
             neighborhoodToadd = Membership(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
             neighborhoodToadd.save()
-            messages.success(request, "✅ You Are Now A Member Of This neighborhood!")
+            messages.success(request, "You Are Now A Member Of This neighborhood!")
             return redirect('single_neighborhood', title = title)
 
+@login_required(login_url='login')
+def leave_neighborhood(request, title):
+    neighborhoodToLeave = Neighborhood.objects.get(title = title)
+    currentUserProfile = request.user.profile
+
+    if not neighborhoodToLeave:
+        messages.error(request, "Neighborhood Does Not Exist!")
+        return redirect('index')
+    else:
+        membership = Membership.objects.filter(user = currentUserProfile, neighborhood_membership = neighborhoodToLeave)
+        if membership:
+            membership.delete()
+            messages.success(request, "You Have Left This Neighborhood!")
+            return redirect('single_neighborhood', title = title)
 
 
 
