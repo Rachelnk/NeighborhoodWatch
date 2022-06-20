@@ -290,8 +290,8 @@ def editneighborhood(request, username, id):
 
 
 @login_required(login_url='login')
-def deleteneighborhood(request, username, title):
-    neighborhood = Business.objects.get(title=title)
+def deleteneighborhood(request, username, name):
+    neighborhood = Business.objects.get(name=name)
     if neighborhood:
         neighborhood.delete()
         messages.success(request, 'Your Neighborhood Has Been Deleted Successfully!')
