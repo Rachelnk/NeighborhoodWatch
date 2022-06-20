@@ -1,3 +1,4 @@
+
 {% load static %}
 {% block navbar %}
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar" id="nbar">
@@ -53,9 +54,7 @@
                 </a>
                     {% endif %}                        
             
-                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">                      
-                            <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
-                        </div>
+                        
                         <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item text-center" href="{% url 'my_profile' user.username %}">Profile</a>
                             <hr>

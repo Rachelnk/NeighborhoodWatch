@@ -111,7 +111,7 @@ def add_neighborhood(request, username):
       return redirect('my_neighborhoods', username = username)
     else:
       messages.error(request, "Neighborhood wasn't created.")
-      return redirect ('add_neighborhood')
+      return redirect ('add_neighborhood', username = username)
 
   else:
     form = AddNeighborhoodForm()
@@ -193,7 +193,7 @@ def add_post(request, username):
         return redirect('my_posts', username = username )
     else:
       messages.error(request, "Your Post Wasn't Created")
-      return redirect(add_post, username = username)
+      return redirect('add_post', username = username)
   else:
     form = AddPostForm()
 

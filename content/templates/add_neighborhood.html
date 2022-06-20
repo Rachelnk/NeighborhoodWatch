@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="navbar-section">
+    {% include 'navbar.html' %}
+  </div>
+
+  <div class="container">
+    <div class="msg-container">
+      {% if messages %}
+                {% for message in messages %} 
+                <div class="alert {{message.tags}} m-1" role="alert" style="font-size: medium; margin-bottom: 30px;">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %} 
+            {% endif %}
+    </div>
+    <h1 class ="text-center" style="margin-top: 80px; font-family: 'Alice', serif;">Add Neighborhood</h5>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="bio layout-spacing ">
+          <div class="widget-content widget-content-area">
+              <div class="row">
+                  <div class="col-xl-4 col-lg-12 col-md-4">
+                      <div class="upload mt-4 pr-md-4">
+                        <div class="form-group">
+                          <label for="fullName">Logo<span class="text-danger">*</span></label>
+                          {{ form.logo }}
+                      </div>
+                          
+                      </div>
+                  </div>
+                  <div class="col-xl-8 col-lg-12 col-md-8 mt-md-0 mt-4">
+                      <div class="form">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label for="fullName">Name<span class="text-danger">*</span></label> <br>
+                                      {{ form.name }}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="profession">Description<span class="text-danger">*</span></label>
+                              {{ form.description }}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="website1">County<span class="text-danger">*</span></label>
+                          {{ form.county }}
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="website1">Neighborhood Location<span class="text-danger">*</span></label>
+                          {{ form.location }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="bio layout-spacing ">
+          <div class="widget-content widget-content-area">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="website1">Health Department Contact</label>
+                          {{ form.health_department }}
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="website1">Police Department</label>
+                          {{ form.police_department }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="bio-skill-box">
+          <center><button type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">Submit</button></center>
+      </div>
+  </form>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="navbar-section">
+    {% include 'navbar.html' %}
+  </div>
+
+  <div class="container">
+    <div class="msg-container">
+      {% if messages %}
+                {% for message in messages %} 
+                <div class="alert {{message.tags}} m-1" role="alert" style="font-size: medium; margin-bottom: 30px;">
+                    {{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %} 
+            {% endif %}
+    </div>
+    <h1 class ="text-center" style="margin-top: 80px; font-family: 'Alice', serif;">Add Post</h5>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="bio layout-spacing ">
+          <div class="widget-content widget-content-area">
+              <div class="row">
+                  
+                  <div class="col-xl-12 col-lg-12 col-md-12 mt-md-0 mt-4">
+                      <div class="form">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <div class="form-group">
+                                      <label for="fullName">Title<span class="text-danger">*</span></label>
+                                      {{ form.title }}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="profession">Description<span class="text-danger">*</span></label>
+                              {{ form.description}}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="website1">Category<span class="text-danger">*</span></label>
+                          {{ form.category }}
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>      
+
+      <div class="bio-skill-box">
+          <center><button type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">Submit</button></center>
+      </div>
+  </form>
+
+  </div>
+{% endblock %}

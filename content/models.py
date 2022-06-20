@@ -77,8 +77,8 @@ post_type = [
 # Create your models here.
 
 class Neighborhood(models.Model):
-    name = models.TextField(max_length=20, verbose_name='Hood Title', null=True)
-    description = models.TextField(max_length=254, blank=True, verbose_name='Description')
+    name = models.CharField(max_length=20, verbose_name='Neighborhood Name', null=True)
+    description = models.CharField(max_length=600, verbose_name='Description', null=True)
     location = models.CharField(max_length=150, verbose_name='Location', null=True, blank=True)
     county = models.CharField(choices=counties, max_length=150, verbose_name='County', null=True, blank=True)
     logo = CloudinaryField('logo')
@@ -131,8 +131,8 @@ class Profile(models.Model):
          verbose_name_plural = 'Profles'
 
 class Post(models.Model):
-    title = models.CharField(max_length=500, verbose_name='Title', null=True)
-    description = models.CharField(max_length=2200, verbose_name='Caption', null=True)
+    title = models.CharField(max_length=20, verbose_name='Title', null=True)
+    description = models.CharField(max_length=500, verbose_name='Description', null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User', null = True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name='Profile', null =True)
     neighborhood =  models.ForeignKey(Neighborhood, on_delete=models.CASCADE, verbose_name='Hood', null= True)

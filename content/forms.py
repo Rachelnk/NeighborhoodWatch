@@ -95,16 +95,17 @@ class UpdateProfileForm(forms.ModelForm):
       exclude = ('user', 'neighborhood')
 
 class AddNeighborhoodForm(forms.ModelForm):
-    title = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Title','class': 'form-control mb-4'}))
+    name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Title','class': 'form-control mb-4'}))
     description = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': 'Description','class': 'form-control mb-4','rows': 3,}))
     location = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Location','class': 'form-control mb-4'}))
     county = forms.ChoiceField(required=True, widget=forms.Select( attrs={'class': 'form-control mb-4'}), choices=counties)
     health_department = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Health Department','class': 'form-control mb-4'}))
     police_department = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Police Department','class': 'form-control mb-4'}))
-    photo = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file',}))
+    logo = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file',}))
     class Meta:
       model = Neighborhood
-      exclude = ('hood_admin',)
+      fields = ('name','description','location','county','logo','health_department','police_department')
+    #   exclude = ('hood_admin',)
 
 class AddBusinessForm(forms.ModelForm):
     title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Title'}))
@@ -123,4 +124,5 @@ class AddPostForm(forms.ModelForm):
   
   class Meta:
        model = Post
+       fields = ('title', 'description', 'category')
        exclude = ('user', 'neighborhood')
