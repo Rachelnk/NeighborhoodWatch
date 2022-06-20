@@ -16,17 +16,62 @@
 
           <ul class="navbar-nav navbar-right">
               {% if user.is_authenticated%}
-              <li class="nav-item dropdown">
-                  <!-- <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                     aria-haspopup="true"
-                     aria-expanded="false">{{ user.username|title }} <img class="rounded-circle nav-img"
+
+                <a href="{% url 'add_neighborhood' user.username %}" name="AddBusiness" style="margin-right: 20px;">
+                <button class="btn btn-info btn-sm" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">
+                    Add Neighborhood
+                </button>
+                </a>
+
+                <a href="{% url 'add_business' user.username %}" name="AddBusiness" style="margin-right: 20px;">
+                    <button class="btn btn-info btn-sm" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">
+                        Add Business
+                    </button>
+                </a>
+
+                <a href="{% url 'add_post' user.username %}" name="AddBusiness" style="margin-right: 20px;">
+                       <button class="btn btn-info btn-sm" id="site" data-toggle="modal" data-target=".bd-example-modal-xl">
+                        Add Post
+                        </button>
+                </a>
+
+
+                    {% if user.profile.profile_picture %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">{{ user.username|title }} <img class="rounded-circle nav-img"
                                                                           src="{{ user.profile.profile_picture.url }}"
                                                                           alt="">
-                  </a> -->
-                  <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">                      
-                      <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
-                  </div>
-              </li>
+                        </a>
+                    else:
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">{{ user.username|title }} <img class="rounded-circle nav-img"
+                                                                  src="https://cdn-icons.flaticon.com/png/128/552/premium/552848.png?token=exp=1655416599~hmac=c78d25b86a0cb42d9cfd078d55a394e4"
+                                                                  alt="">
+                </a>
+                    {% endif %}                        
+            
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">                      
+                            <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
+                        </div>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item text-center" href="{% url 'my_profile' user.username %}">Profile</a>
+                            <hr>
+                            <a class="dropdown-item text-center" href="{% url 'my_neighborhoods' user.username %}"><i class="fa-solid fa-user-large"></i> My Neighborhoods</a>
+                            <hr>                            
+                            <a class="dropdown-item text-center" href="{% url 'my_businesses' user.username  %}"> My Businesses</a>
+                            <hr>
+                            <a class="dropdown-item text-center" href="{% url 'my_posts' user.username  %}"> My Posts</a>
+                            <hr>
+                            <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
+    
+    
+                        </div>
+
+
+                    </li>
               {% else %}
               <a href="{% url 'login' %}" class="login btn btn-sm btn-info" style="margin-right: 5px ;"> REGISTER/LOGIN </a>
               {% endif %}

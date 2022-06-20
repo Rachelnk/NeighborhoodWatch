@@ -116,7 +116,7 @@ def add_neighborhood(request, username):
   else:
     form = AddNeighborhoodForm()
 
-  return render(request, add_neighborhood.html, {'form': form, 'profile_details':profile_details})
+  return render(request, 'add_neighborhood.html', {'form': form, 'profile_details':profile_details})
 
 @login_required(login_url='login')
 def my_neighborhoods(request, username):
@@ -142,7 +142,7 @@ def add_business(request, username):
 
       if not member:
           messages.error(request,"Not a member of this neighborhood thus you cannot add a business. Join the neighborhood first.")
-          return redirect('my_businesss', username=username)
+          return redirect('add_business', username=username)
 
       else:
         hood = Neighborhood.objects.get(pk=int(neighborhood))
@@ -164,7 +164,7 @@ def add_business(request, username):
 def my_businesses(request, username):
   profile = User.objects.get(username = username)
   profile_details = Profile.objects.get(user = profile.id)
-  businesses = Business.object.filter(owner = profile.id).all()
+  businesses = Business.objects.filter(owner = profile.id).all()
   return render(request, 'my_businesses.html', {'businesses':businesses,'profile_details':profile_details})
 
 @login_required(login_url='login')
@@ -203,7 +203,7 @@ def add_post(request, username):
 def my_posts(request, username):
   profile = User.objects.get(username = username)
   profile_details = Profile.objects.get(user = profile.id)
-  posts = Post.object.filter(user = profile.id).all()
+  posts = Post.objects.filter(user = profile.id).all()
   return render(request, 'my_posts.html', {'posts':posts,'profile_details':profile_details})
 
 # delete and edit functions for post
