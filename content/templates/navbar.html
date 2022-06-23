@@ -64,6 +64,8 @@
                             <hr>
                             <a class="dropdown-item text-center" href="{% url 'my_posts' user.username  %}"> My Posts</a>
                             <hr>
+                            <a class="dropdown-item" href="{% url 'editprofile' user.username %}" name="EditProfile"><i class="fa-solid fa-edit"></i> Edit Profile</a>
+                            <hr>
                             <a href="{% url 'logout' %}" class="text-secondary text-center dropdown-item">Log Out</a>
     
     

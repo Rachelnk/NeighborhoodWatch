@@ -13,7 +13,7 @@ urlpatterns = [
   re_path(r'^(?P<username>\w{0,50})/add/neighborhood/$', views.add_neighborhood, name = 'add_neighborhood'),
   re_path(r'^(?P<username>\w{0,50})/add/business/$', views.add_business, name = 'add_business'),
   re_path(r'^(?P<username>\w{0,50})/add/post/$', views.add_post, name = 'add_post'),
-  # re_path(r'^/(?P<>\w{0,50})/$', views., name = ''),
+  re_path(r'^(?P<username>\w{0,50})/edit/profile/$', views.editprofile, name = 'editprofile'),
   # re_path(r'^/(?P<>\w{0,50})/$', views., name = ''),
 
 ]
