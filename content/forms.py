@@ -88,14 +88,21 @@ class UpdateUserForm(forms.ModelForm):
 class UpdateProfileForm(forms.ModelForm):
     portfolio_pic = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'form-control-file','data-height':300, 'data-max-file-size':"1M"}))
     bio = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Bio'}))
+    neighborhood = forms.ChoiceField(label=u'Select Your Neighborhood', required=True, widget=forms.Select(attrs={'class': 'form-control mb-4'}))
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateProfileForm, self).__init__(*args, **kwargs)
+        self.fields['neighborhood'].choices = [(e.id, e.name) for e in Neighborhood.objects.all()]
+    
     
 
     class Meta:
       model = Profile
-      exclude = ('user', 'neighborhood')
+    #   exclude = ('user',)
+      fields = ['profile_pic', 'bio', 'neighborhood']
 
 class AddNeighborhoodForm(forms.ModelForm):
-    name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Title','class': 'form-control mb-4'}))
+    name = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Name','class': 'form-control mb-4'}))
     description = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': 'Description','class': 'form-control mb-4','rows': 3,}))
     location = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Location','class': 'form-control mb-4'}))
     county = forms.ChoiceField(required=True, widget=forms.Select( attrs={'class': 'form-control mb-4'}), choices=counties)
@@ -107,24 +114,24 @@ class AddNeighborhoodForm(forms.ModelForm):
       fields = ['name','description','location','county','logo','health_department','police_department']
     #   exclude = ('hood_admin',)
 
-class AddBusinessForm(forms.ModelForm):
+class AddBusinessForm(forms.Form):
     title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Title'}))
     description = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Description'}))
     category = forms.ChoiceField(choices=business_type, required=True, widget=forms.Select(attrs={'class': 'form-control mb-4', 'placeholder':'Select Business Type'}))
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control mb-4', 'placeholder':'Business Email'}))
-    neighbourhood = forms.ChoiceField(required=True, widget=forms.Select(attrs={'placeholder': 'Neighbourhood','class': 'form-control mb-4'}))
+    neighbourhood = forms.ChoiceField(required=True, widget=forms.Select(attrs={'placeholder': 'Neighborhood','class': 'form-control mb-4'}))
 
     def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
-        self.fields['neighbourhood'].choices = [(e.id, e.title) for e in Neighborhood.objects.all()]
+        self.fields['neighborhood'].choices = [(e.id, e.name) for e in Neighborhood.objects.all()]
     
     class Meta:
         model = Business
         fields = ['title', 'description', 'category', 'email','neighborhood']
-        exclude = ('user', 'neighborhood')
+        # exclude = ('user', )
 
 
-class AddPostForm(forms.ModelForm):
+class AddPostForm(forms.Form):
   title = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-control mb-4', 'placeholder':'Title'}))
   description = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'form-control mb-4', 'rows': 5, 'placeholder':'Description'}))
   category = forms.ChoiceField(choices=post_type, required=True, widget=forms.Select(attrs={'class': 'form-control mb-4', 'placeholder':'Select Post Type'}))
@@ -132,10 +139,10 @@ class AddPostForm(forms.ModelForm):
 
   def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
-        self.fields['neighborhood'].choices = [(e.id, e.title) for e in Neighborhood.objects.all()]
+        self.fields['neighborhood'].choices = [(e.id, e.name) for e in Neighborhood.objects.all()]
     
   
   class Meta:
        model = Post
        fields = ['title', 'description', 'category', 'neighborhood']
-       exclude = ('user',)
+    #    exclude = ('user',)

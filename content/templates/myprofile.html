@@ -85,26 +85,14 @@
                                     </div>
                                 </div>
                                 <hr>
+                                
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">ID Number</h6>
+                                        <h6 class="mb-0">Neighborhood</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        {% if profile_details.national_id %}
-                                        {{ profile_details.national_id }}
-                                        {% else %}
-                                        Not Selected
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Neighbourhood</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        {% if profile_details.neighbourHood %}
-                                            {{ profile_details.neighbourHood }}
+                                        {% if profile_details.neighborhood %}
+                                            {{ profile_details.neighborhood }}
                                         {% else %}
                                             Not Selected
                                         {% endif %}
@@ -113,7 +101,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a class="btn btn-primary" href="{% url 'EditProfile' user.username %}" name="EditProfile"><i class="fa-solid fa-edit"></i> Edit Profile Details</a>
+                                        <a class="btn btn-primary" href="{% url 'editprofile' user.username %}" name="EditProfile"><i class="fa-solid fa-edit"></i> Edit Profile Details</a>
                                     </div>
                                 </div>
                             </div>

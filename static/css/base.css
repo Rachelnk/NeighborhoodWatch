@@ -1,5 +1,8 @@
 body{
   height: 100%;
+  color: #000000!important;
+background: #ffffff!important;
+font-family: 'Roboto', sans-serif;
 }
 a {
     color: #73db73;

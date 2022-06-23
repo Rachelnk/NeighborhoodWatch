@@ -31,7 +31,7 @@
                 {% for neighborhood in neighborhoods %}
                 <div class="col-sm-4">
                     <div class="card" style="margin-bottom: 30px; border-radius: 3px;">
-                        <a href="{% url 'SingleNeighbourhood' neighbourhood.title %}" name="SingleNeighbourhood">
+                        <a href="{% url 'singleneighbourhood' neighbourhood.title %}" name="SingleNeighbourhood">
                             {% if neighborhood.neighborhood_logo %} 
                                 <img src="{{ neighborhood.neighborhood_logo.url }}" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
                             {% else %}

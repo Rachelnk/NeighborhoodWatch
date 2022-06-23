@@ -85,7 +85,7 @@ def editprofile(request, username):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your Profile Has Been Updated Successfully!')
-            return redirect('myprofile', username=username)
+            return redirect('my_profile', username=username)
         else:
             messages.error(request, "Your Profile Wasn't Updated!")
             return redirect('editprofile', username=username)
@@ -348,7 +348,7 @@ def leave_neighborhood(request, name):
         messages.error(request, "Neighborhood Does Not Exist!")
         return redirect('index')
     else:
-        membership = Membership.objects.filter(user = currentUserProfile, neighborhood_membership = neighborhoodToLeave)
+        membership = Membership.objects.filter(user = currentUserProfile, neighbourhood_membership = neighborhoodToLeave)
         if membership:
             membership.delete()
             messages.success(request, "You Have Left This Neighborhood!")

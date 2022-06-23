@@ -75,18 +75,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="profession">National ID</label>
-                                            {{ profile_form.national_id }}
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="profession">Neighbourhood <span class="text-danger">*</span></label>
-                                            <select name="neighbourhood" class="form-control mb-4" placeholder="Select Neighbourhood">
-                                                <option value="" selected disabled>Select Neighbourhood</option>
-                                                {% for id, title in profile_form.fields.neighbourhood.choices %}
+                                            <label for="profession">Neighborhood <span class="text-danger">*</span></label>
+                                            <select name="Neighborhood" class="form-control mb-4" placeholder="Select Neighborhood">
+                                                <option value="" selected disabled>Select Neighborhood</option>
+                                                {% for id, title in profile_form.fields.neighborhood.choices %}
                                                 <option value="{{ id }}">{{ title }}</option>
                                                 {% endfor %}
                                             </select>
@@ -101,7 +96,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <a href="{% url 'MyProfile' user.username %}" name='MyProfile'>
+                                            <a href="{% url 'my_profile' user.username %}" name='MyProfile'>
                                                 <button type="button" class="btn btn-dark btn-lg btn-block">Cancel</button>
                                             </a>
                                         </div>
