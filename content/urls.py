@@ -14,8 +14,9 @@ urlpatterns = [
   re_path(r'^(?P<username>\w{0,50})/add/business/$', views.add_business, name = 'add_business'),
   re_path(r'^(?P<username>\w{0,50})/add/post/$', views.add_post, name = 'add_post'),
   re_path(r'^(?P<username>\w{0,50})/edit/profile/$', views.editprofile, name = 'editprofile'),
-  re_path(r'^(?P<username>\w{0,50})/$', views.join_neighborhood, name = 'joinneighbourhood'),
+  path('join/neighbourhood/<str:name>', views.join_neighborhood, name="joinneighborhood"),
   path('search', views.search_business, name="search_results"),
-  re_path(r'^neighborhood/(?P<name>\w{0,50})/$', views.single_neighborhood, name='single_neighborhood'),
+  path('neighborhood/<str:name>/', views.single_neighborhood, name='single_neighborhood'),
+  path('leave/neighbourhood/<str:name>', views.leave_neighborhood, name="leaveneighbourhood"),
 
 ]

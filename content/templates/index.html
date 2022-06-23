@@ -23,7 +23,7 @@
                 {% for neighborhood in neighborhoods %}
                 <div class="col-sm-4">
                     <div class="card" style="margin-bottom: 30px; border-radius: 3px;">
-                        <a href="{% url 'single_neighborhood' neighborhood.title %}" name="Singleneighborhood">
+                        <a href="{% url 'single_neighborhood' neighborhood.name %}" name="Singleneighborhood">
                             {% if neighborhood.neighborhood_logo %}
                                 <img src="{{ neighborhood.neighborhood_logo.url }}" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
                             {% else %}
@@ -31,7 +31,7 @@
                             {% endif %}
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">{{ neighborhood.title }}</h5>
+                            <h5 class="card-title">{{ neighborhood.name }}</h5>
                             <div class="badge" style="float:left">
                                 <h6><span  style="font-weight: lighter; font-size: small;">Location: <b>{{ neighborhood.location }}</b></span></h6>
                             </div>
@@ -50,7 +50,7 @@
                                 <br>
                             </div>
                             <br>
-                            <a href="{% url 'single_neighborhood' neighborhood.title %}" name="Singleneighborhood">
+                            <a href="{% url 'single_neighborhood' neighborhood.name %}" name="Singleneighborhood">
                                 <button class="btn btn-primary btn-block">More Details</button>
                             </a>
                         </div>

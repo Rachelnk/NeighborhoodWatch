@@ -306,43 +306,42 @@ def single_neighborhood(request, name):
   neighborhood = get_object_or_404(Neighborhood, name=name)
   businesses = Business.objects.filter(neighborhood = neighborhood.id).all()
   posts = Post.objects.filter(neighborhood = neighborhood.id).all()
-  members = Membership.objects.filter(neighborhood_membership = neighborhood.id).all()
-  member = Membership.objects.filter(user = current_profile.id, neighborhood_membership = neighborhood.id )
+  members = Membership.objects.filter(neighbourhood_membership = neighborhood.id).all()
+  member = Membership.objects.filter(user = current_profile.id, neighbourhood_membership = neighborhood.id )
   is_member = False
   if member:
     is_member = True
   else:
     is_member = False
-    params = {'neighborhood':neighborhood,'businesses':businesses,'posts':posts,'members':members, 'is_member':is_member}
 
-  return render(request, 'neighborhood.html', params )
+  return render(request, 'neighborhood.html', {'neighborhood':neighborhood,'businesses':businesses,'posts':posts,'members':members, 'is_member':is_member} )
 
 @login_required(login_url='login')
-def join_neighborhood(request, title):
-  neighborhoodTobejoined = Neighborhood.objects.get(title = title)
+def join_neighborhood(request, name):
+  neighborhoodTobejoined = Neighborhood.objects.get(name = name)
   currentUserProfile = request.user.profile
 
   if not neighborhoodTobejoined:
-        messages.error(request, "⚠️ neighborhood Does Not Exist!")
+        messages.error(request, "Neighborhood Does Not Exist!")
         return redirect('index')
   else:
         member_elsewhere = Membership.objects.filter(user = currentUserProfile)
-        joined = Membership.objects.filter(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
+        joined = Membership.objects.filter(user = currentUserProfile, neighbourhood_membership = neighborhoodTobejoined)
         if joined:
-            messages.error(request, 'ou Can Only Join A neighborhood Once!')
-            return redirect('single_neighborhood', title = title)
+            messages.error(request, 'You Can Only Join A neighborhood Once!')
+            return redirect('single_neighborhood', name = name)
         elif member_elsewhere:
             messages.error(request, 'You Are Already A Member In Another neighborhood! Leave To Join This One')
-            return redirect('single_neighborhood', title = title)
+            return redirect('single_neighborhood', name = name)
         else:
-            neighborhoodToadd = Membership(user = currentUserProfile, neighborhood_membership = neighborhoodTobejoined)
+            neighborhoodToadd = Membership(user = currentUserProfile, neighbourhood_membership = neighborhoodTobejoined)
             neighborhoodToadd.save()
             messages.success(request, "You Are Now A Member Of This neighborhood!")
-            return redirect('single_neighborhood', title = title)
+            return redirect('single_neighborhood', name = name)
 
 @login_required(login_url='login')
-def leave_neighborhood(request, title):
-    neighborhoodToLeave = Neighborhood.objects.get(title = title)
+def leave_neighborhood(request, name):
+    neighborhoodToLeave = Neighborhood.objects.get(name = name)
     currentUserProfile = request.user.profile
 
     if not neighborhoodToLeave:
@@ -353,7 +352,7 @@ def leave_neighborhood(request, title):
         if membership:
             membership.delete()
             messages.success(request, "You Have Left This Neighborhood!")
-            return redirect('single_neighborhood', title = title)
+            return redirect('single_neighborhood', name = name)
 
 def search_business(request):
   if request.method == 'POST':
