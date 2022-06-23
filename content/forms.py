@@ -116,7 +116,7 @@ class AddBusinessForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UpdateProfileForm, self).__init__(*args, **kwargs)
-        self.fields['neighbourhood'].choices = [(e.id, e.title) for e in NeighbourHood.objects.all()]
+        self.fields['neighbourhood'].choices = [(e.id, e.title) for e in Neighborhood.objects.all()]
     
     class Meta:
         model = Business
