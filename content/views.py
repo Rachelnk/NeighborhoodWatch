@@ -37,8 +37,8 @@ def logoutUser(request):
 
 @login_required(login_url='login')
 def index(request):
-  hood = Neighborhood.objects.all()
-  return render (request, 'index.html', {'hood': hood})
+  neighborhoods = Neighborhood.objects.all()
+  return render (request, 'index.html', {'neighborhoods': neighborhoods})
 
 def signup(request):
   if request.method == 'POST':
@@ -303,7 +303,7 @@ def deleteneighborhood(request, username, name):
 @login_required(login_url='login')
 def single_neighborhood(request, name):
   current_profile = request.user.profile
-  neighborhood = get_object_or_404(Neighborhood, title=name)
+  neighborhood = get_object_or_404(Neighborhood, name=name)
   businesses = Business.objects.filter(neighborhood = neighborhood.id).all()
   posts = Post.objects.filter(neighborhood = neighborhood.id).all()
   members = Membership.objects.filter(neighborhood_membership = neighborhood.id).all()

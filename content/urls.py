@@ -16,5 +16,6 @@ urlpatterns = [
   re_path(r'^(?P<username>\w{0,50})/edit/profile/$', views.editprofile, name = 'editprofile'),
   re_path(r'^(?P<username>\w{0,50})/$', views.join_neighborhood, name = 'joinneighbourhood'),
   path('search', views.search_business, name="search_results"),
+  re_path(r'^neighborhood/(?P<name>\w{0,50})/$', views.single_neighborhood, name='single_neighborhood'),
 
 ]

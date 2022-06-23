@@ -1,6 +1,32 @@
 body{
   height: 100%;
 }
+a {
+    color: #73db73;
+	text-decoration: none;
+}
+
+a:hover {
+    color: #006837;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, p{
+	color: #000000;
+}
+
+.form-control {
+	height: 41px;
+	background: #f2f2f2;
+	box-shadow: none !important;
+	border: none;
+}
+.form-control:focus {
+	background: #e2e2e2;
+}
+.form-control, .btn {        
+	border-radius: 3px;
+}
 #login-body {
   background-image:url(/static/img/banner1.avif);
   background-repeat:no-repeat;
@@ -201,4 +227,38 @@ body{
     padding: 7px 7px;
     width: 100%;
     font-size: 12px;
+}
+.btn {
+    border-radius: 3px;
+}
+
+.btn-primary{
+    background-color: #006837;
+    border-color: #006837;
+    color: #ffffff;
+}
+
+.btn-primary:hover{
+    background-color: #73db73;
+    border-color: #73db73;
+    color: #ffffff;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #006837;
+    border-color: #006837;
+}
+
+.fa{
+    color: #006837;
+}
+
+.fa:hover{
+    color: #73db73;
+}
+
+textarea {
+	height: 150px;
+    resize: none;
 }
