@@ -122,8 +122,11 @@ def add_neighborhood(request, username):
 def my_neighborhoods(request, username):
   profile = User.objects.get(username=username)
   profile_details =  Profile.objects.get(user = profile.id)
-  hoods = Neighborhood.objects.filter(hood_admin = profile.id)
-  return render (request, 'my_neighborhoods.html', {'profile_details':profile_details})
+  neighborhoods = Neighborhood.objects.filter(hood_admin = profile.id)
+  for neighborhood in neighborhoods:
+        print(neighborhood.title)
+        print(neighborhood.description)
+  return render (request, 'my_neighborhoods.html', {'neighborhoods':neighborhoods,'profile_details':profile_details})
 
 @login_required(login_url='login')
 def add_business(request, username):
@@ -303,7 +306,7 @@ def deleteneighborhood(request, username, name):
 @login_required(login_url='login')
 def single_neighborhood(request, name):
   current_profile = request.user.profile
-  neighborhood = get_object_or_404(Neighborhood, name=name)
+  neighborhood = get_object_or_404(Neighborhood, name = name)
   businesses = Business.objects.filter(neighborhood = neighborhood.id).all()
   posts = Post.objects.filter(neighborhood = neighborhood.id).all()
   members = Membership.objects.filter(neighbourhood_membership = neighborhood.id).all()

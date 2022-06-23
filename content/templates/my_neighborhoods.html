@@ -31,7 +31,7 @@
                 {% for neighborhood in neighborhoods %}
                 <div class="col-sm-4">
                     <div class="card" style="margin-bottom: 30px; border-radius: 3px;">
-                        <a href="{% url 'singleneighbourhood' neighbourhood.title %}" name="SingleNeighbourhood">
+                        <a href="{% url 'singleneighborhood' neighborhood.title %}" name="Singleneighborhood">
                             {% if neighborhood.neighborhood_logo %} 
                                 <img src="{{ neighborhood.neighborhood_logo.url }}" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
                             {% else %}
@@ -39,21 +39,21 @@
                             {% endif %}
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">{{ neighbourhood.title }}</h5>
-                            <P class="card-text">{{ neighbourhood.description|truncatewords:10 }}</h5>
+                            <h5 class="card-title">{{ neighborhood.title }}</h5>
+                            <P class="card-text">{{ neighborhood.description|truncatewords:10 }}</h5>
                             <div class="badge">
-                                <h6><span  style="font-weight: lighter; font-size: small;">Location: <b>{{ neighbourhood.location }}</b></span></h6>
+                                <h6><span  style="font-weight: lighter; font-size: small;">Location: <b>{{ neighborhood.location }}</b></span></h6>
                             </div>
                             <br>
                             <div class="badge">
-                                <h6><span  style="font-weight: lighter; font-size: small;">Health Department: <b>{{ neighbourhood.health_department }}</b></span></h6>
+                                <h6><span  style="font-weight: lighter; font-size: small;">Health Department: <b>{{ neighborhood.health_department }}</b></span></h6>
                             </div>
                             <br>
                             <div class="badge">
-                                <h6><span  style="font-weight: lighter; font-size: small;">Police Department: <b>{{ neighbourhood.police_department }}</b></span></h6>
+                                <h6><span  style="font-weight: lighter; font-size: small;">Police Department: <b>{{ neighborhood.police_department }}</b></span></h6>
                             </div>
                             <div class="badge" style="float:right">
-                                <h6><span class="badge badge-primary">{{ neighbourhood.county }}</span></h6>
+                                <h6><span class="badge badge-primary">{{ neighborhood.county }}</span></h6>
                             </div>
                             <br>
                             <hr>
@@ -65,9 +65,9 @@
                                 {% endif %}
                                 <div class="d-flex flex-column justify-content-start ml-2">
                                     <a href="#">
-                                        <span class="name"><b>{{ neighbourhood.neighbourhood_admin.first_name }} {{ neighbourhood.neighbourhood_admin.last_name }} <span class="text-dark">(Admin)</span></b></span>
+                                        <span class="name"><b>{{ neighborhood.neighborhood_admin.first_name }} {{ neighborhood.neighborhood_admin.last_name }} <span class="text-dark">(Admin)</span></b></span>
                                     </a>
-                                    <span class="text-muted" style="font-size: small;"><i class="fas fa-calendar-alt"></i> {{ neighbourhood.date_created }}</span>
+                                    <span class="text-muted" style="font-size: small;"><i class="fas fa-calendar-alt"></i> {{ neighborhood.date_created }}</span>
                                 </div>
                                 <br>
                             </div>
@@ -79,11 +79,11 @@
         {% else %}
             <div class="col-sm-12" style="margin-top: 20px;">
                 <div class="content text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M19 2H9c-1.103 0-2 .897-2 2v5.586l-4.707 4.707A1 1 0 0 0 3 16v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4c0-1.103-.897-2-2-2zm-8 18H5v-5.586l3-3 3 3V20zm8 0h-6v-4a.999.999 0 0 0 .707-1.707L9 9.586V4h10v16z"></path><path d="M11 6h2v2h-2zm4 0h2v2h-2zm0 4.031h2V12h-2zM15 14h2v2h-2zm-8 1h2v2H7z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);"><path d="M19 2H9c-1.103 0-2 .897-2 2v5.586l-4.707 4.707A1 1 0 0 0 3 16v5a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4c0-1.103-.897-2-2-2zm-8 18H5v-5.586l3-3 3 3V20zm8 0h-6v-4a.999.999 0 0 0 .707-1.707L9 9.586V4h10v16z"></path><path d="M11 6h2v2h-2zm4 0h2v2h-2zm0 4.031h2V12h-2zM15 14h2v2h-2zm-8 1h2v2H7z"></path></svg>
                     <br>
                     <h4 class="text-dark py-3">No Associated Neighborhoods Found</h4>
-                    <a href="{% url 'add_neighborhood' user.username %}" name="AddNeighbourhood">
-                        <button type="submit" class="btn btn-primary btn-md" style="margin-right: 20px;"><i class="fa-solid fa-plus"></i> Add A Neighbourhood</button>
+                    <a href="{% url 'add_neighborhood' user.username %}" name="Addneighborhood">
+                        <button type="submit" class="btn btn-primary btn-md" style="margin-right: 20px;"><i class="fa-solid fa-plus"></i> Add A Neighborhood</button>
                     </a>
                     <br>
                 </div> 
