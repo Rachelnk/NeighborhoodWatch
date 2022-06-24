@@ -20,7 +20,7 @@
 `$ git@github.com:Rachelnk/NeighborhoodWatch.git`
 *
 * Navigate into the folder
-* `cd ProjectAwards` and `pip install -r requirements.txt`
+* `cd Neighborhood` and `pip install -r requirements.txt`
 * 
 ### Creating virtual environment
 * `python3 -m venv virtual`
