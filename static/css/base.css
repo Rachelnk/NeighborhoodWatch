@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, p{
 .form-control, .btn {        
 	border-radius: 3px;
 }
-#login-body {
+/* #login-body {
   background-image:url(/static/img/banner1.avif);
   background-repeat:no-repeat;
   background-attachment: fixed;
@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6, p{
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-}
+} */
 .signup-form {
 	width: 350px;
 	margin: 30px auto;

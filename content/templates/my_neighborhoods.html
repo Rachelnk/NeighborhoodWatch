@@ -32,14 +32,14 @@
                 <div class="col-sm-4">
                     <div class="card" style="margin-bottom: 30px; border-radius: 3px;">
                         <a href="{% url 'singleneighborhood' neighborhood.title %}" name="Singleneighborhood">
-                            {% if neighborhood.neighborhood_logo %} 
-                                <img src="{{ neighborhood.neighborhood_logo.url }}" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
+                            {% if neighborhood.logo %} 
+                                <img src="{{ neighborhood.logo.url }}" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
                             {% else %}
                                 <img src="https://images.pexels.com/photos/1051321/pexels-photo-1051321.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="card-img-top" style="border-radius: 3px 3px 0px 0px;" alt="...">
                             {% endif %}
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title">{{ neighborhood.title }}</h5>
+                            <h5 class="card-title">{{ neighborhood.name }}</h5>
                             <P class="card-text">{{ neighborhood.description|truncatewords:10 }}</h5>
                             <div class="badge">
                                 <h6><span  style="font-weight: lighter; font-size: small;">Location: <b>{{ neighborhood.location }}</b></span></h6>
